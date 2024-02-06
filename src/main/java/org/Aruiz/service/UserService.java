@@ -12,45 +12,87 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
-     UserRepository repo;
+    static UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        List<User> users =  repo.findAll();
+    /**
+     * Obtiene todos los usuarios
+     *
+     * @return La lista de usuarios
+     */
+    public static List<User> getAllUsers() {
+        List<User> users = userRepository.findAll();
         return users;
     }
-    public User getUserById(int id) {
-        Optional<User> user = repo.findById(id);
-        if(user.isPresent()){
+
+    /**
+     * Obtiene un usuario por su id
+     *
+     * @param id El id del usuario
+     * @return El usuario con el id dado
+     */
+    public static User getUserById(int id) {
+        Optional<User> user = userRepository.findById((long) id);
+        if (user.isPresent()) {
             return user.get();
-        }else{
-            throw new RecordNotFoundException("No user found with id: " + id);
+        } else {
+            throw new RecordNotFoundException("No se encontró un usuario con el id: " + id);
         }
     }
-    public User createOrUpdateUser(User user) {
+
+    /**
+     * Crea o actualiza un usuario
+     *
+     * @param user El usuario a crear o actualizar
+     * @return El usuario creado o actualizado
+     */
+    public static User createOrUpdateUser(User user) {
         User end;
-        if(user.getId() != -1){ //update
-            Optional<User> result = repo.findById(user.getId());
-            if(result.isPresent()){
+        if (user.getId() >0) {// Actualizar
+            Optional<User> result = userRepository.findById(user.getId());
+            if (result.isPresent()) {
                 User fromDB = result.get();
-                fromDB.setName(user.getName());
-                fromDB.setAge(user.getAge());
-                end=repo.save(fromDB);
-            }else{
-                throw new RecordNotFoundException("No user found with id: " + user.getId());
+                fromDB.setUserName(user.getUserName());
+                fromDB.setPassword(user.getPassword());
+                fromDB.setLatitude(user.getLatitude());
+                fromDB.setLongitude(user.getLongitude());
+                fromDB.setImageProfile(user.getImageProfile());
+                fromDB.setBiography(user.getBiography());
+                end = userRepository.save(fromDB);
+            } else {
+                throw new RecordNotFoundException("No se encontró un usuario con el id: " + user.getId());
             }
-        }else{  //insert
-            end=repo.save(user);
+        } else {// Insertar
+            end= userRepository.save(user);
         }
         return end;
     }
 
-    public void deleteUser(int id) {
-        Optional<User> result = repo.findById(id);
-        if(result.isPresent()){
-            repo.deleteById(id);
-        }else{
-            throw new RecordNotFoundException("No user found with id: " + id);
+    /**
+     * Elimina un usuario por su id
+     *
+     * @param id El id del usuario a eliminar
+     */
+    public static void deleteUser(int id) {
+        Optional<User> result = userRepository.findById((long) id);
+        if (result.isPresent()) {
+            userRepository.deleteById((long) id);
+        } else {
+            throw new RecordNotFoundException("No se encontró un usuario con el id: " + id);
         }
     }
 
+    /**
+     * Obtiene un usuario por su nombre de usuario
+     *
+     * @param username El nombre de usuario del usuario
+     * @return El usuario con el nombre de usuario dado
+     */
+    public static User getUserByName(String username) {
+        Optional<User> result = userRepository.findByUsername(username);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new RecordNotFoundException("No se encontró un usuario con el nombre de usuario: " + username);
+        }
+    }
 }
