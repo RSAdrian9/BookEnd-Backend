@@ -2,58 +2,112 @@ package org.Aruiz.model;
 
 import jakarta.persistence.*;
 
+import java.util.Arrays;
+
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(name="name",length = 256,nullable = false)
-    private String name;
-    @Column(name="age",nullable = false)
-    private int age;
+    @Column(name="username",length = 256,nullable = false, unique = true)
+    private String username;
+    @Column(name="password",nullable = false)
+    private String password;
+
+    @Column(name="latitude")
+    private Double latitude;
+
+    @Column(name="longitude")
+    private Double longitude;
+
+    @Column(name="image_profile")
+    private byte[] image_profile;
+
+    @Column(name="biography", columnDefinition = "TEXT")
+    private String biography;
+
+    public User(Long id, String username, String password, Double latitude, Double longitude, byte[] image_profile, String biography) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.image_profile = image_profile;
+        this.biography = biography;
+    }
 
     public User() {
-        this(-1,"",0);
+
     }
 
-    public User(int id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
-    public int getAge() {
-        return age;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public byte[] getImageProfile() {
+        return image_profile;
+    }
+
+    public void setImageProfile(byte[] image_profile) {
+        this.image_profile = image_profile;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", imageProfile=" + Arrays.toString(image_profile) +
+                ", biography='" + biography + '\'' +
                 '}';
     }
 }
