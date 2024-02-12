@@ -23,12 +23,12 @@ public class User {
     private Double longitude;
 
     @Column(name="image_profile")
-    private byte[] image_profile;
+    private String image_profile;
 
     @Column(name="biography", columnDefinition = "TEXT")
     private String biography;
 
-    public User(Long id, String username, String password, Double latitude, Double longitude, byte[] image_profile, String biography) {
+    public User(Long id, String username, String password, Double latitude, Double longitude, String image_profile, String biography) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -82,12 +82,12 @@ public class User {
         this.longitude = longitude;
     }
 
-    public byte[] getImageProfile() {
+    public String getImageProfile() {
         return image_profile;
     }
 
-    public void setImageProfile(byte[] image_profile) {
-        this.image_profile = image_profile;
+    public void setImageProfile(String imageProfile) {
+        this.image_profile = imageProfile;
     }
 
     public String getBiography() {
@@ -106,7 +106,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", imageProfile=" + Arrays.toString(image_profile) +
+                ", imageProfile='" + image_profile + '\'' +
                 ", biography='" + biography + '\'' +
                 '}';
     }
