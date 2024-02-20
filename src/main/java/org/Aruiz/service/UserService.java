@@ -12,14 +12,14 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
-    static UserRepository userRepository;
+    UserRepository userRepository;
 
     /**
      * Obtiene todos los usuarios
      *
      * @return La lista de usuarios
      */
-    public static List<User> getAllUsers() {
+    public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users;
     }
@@ -30,7 +30,7 @@ public class UserService {
      * @param id El id del usuario
      * @return El usuario con el id dado
      */
-    public static User getUserById(int id) {
+    public User getUserById(int id) {
         Optional<User> user = userRepository.findById((long) id);
         if (user.isPresent()) {
             return user.get();
@@ -45,9 +45,9 @@ public class UserService {
      * @param user El usuario a crear o actualizar
      * @return El usuario creado o actualizado
      */
-    public static User createOrUpdateUser(User user) {
+    public User createOrUpdateUser(User user) {
         User end;
-        if (user.getId() >0) {// Actualizar
+        if(user.getId() >0) {// Actualizar
             Optional<User> result = userRepository.findById(user.getId());
             if (result.isPresent()) {
                 User fromDB = result.get();
@@ -72,7 +72,7 @@ public class UserService {
      *
      * @param id El id del usuario a eliminar
      */
-    public static void deleteUser(int id) {
+    public void deleteUser(int id) {
         Optional<User> result = userRepository.findById((long) id);
         if (result.isPresent()) {
             userRepository.deleteById((long) id);
@@ -87,7 +87,7 @@ public class UserService {
      * @param username El nombre de usuario del usuario
      * @return El usuario con el nombre de usuario dado
      */
-    public static User getUserByName(String username) {
+    public User getUserByName(String username) {
         Optional<User> result = userRepository.findByUsername(username);
         if (result.isPresent()) {
             return result.get();
