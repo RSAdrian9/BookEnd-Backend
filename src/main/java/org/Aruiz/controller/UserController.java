@@ -9,21 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/users")
 public class UserController {
-
     @Autowired
     UserService userService;
-
     /**
      * Obtiene todos los usuarios
      *
      * @return Lista de usuarios
      */
     @GetMapping
-    public ResponseEntity<List<User>> findAllUsers(){
-        List<User> list = userService.getAllUsers();
-        return ResponseEntity.ok(list);
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     /**
@@ -33,7 +31,7 @@ public class UserController {
      * @return El usuario con el id dado
      */
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable("id") int id){
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id){
         User user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
@@ -45,7 +43,7 @@ public class UserController {
      * @return El usuario con el nombre de usuario dado
      */
     @GetMapping("/{username}")
-    public ResponseEntity<User> findUserByUsername(@PathVariable("username") String username){
+    public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username){
         User user = userService.getUserByName(username);
         return ResponseEntity.ok(user);
     }
@@ -69,7 +67,6 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") int id){
-
         userService.deleteUser(id);
     }
 }
