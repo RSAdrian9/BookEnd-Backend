@@ -76,7 +76,7 @@ public class UserService {
     public void deleteUser(int id) {
         Optional<User> result = userRepository.findById((int) id);
         if (result.isPresent()) {
-            userRepository.deleteById((short) id);
+            userRepository.deleteById((int) id);
         } else {
             throw new RecordNotFoundException("No se encontró un usuario con el id: " + id);
         }

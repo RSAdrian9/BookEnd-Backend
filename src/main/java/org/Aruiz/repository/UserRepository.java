@@ -14,8 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // Método para buscar un usuario por su nombre de usuario (único)
     Optional<User> findByUsername(String username);
 
-    // Método para eliminar un usuario por su nombre de usuario (único)
+    // Método para eliminar un usuario por su id de usuario
     void deleteById(int id);
-
 
 }
