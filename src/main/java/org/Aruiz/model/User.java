@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name="username",length = 256,nullable = false, unique = true)
     private String username;
@@ -28,7 +28,7 @@ public class User {
     @Column(name="biography", columnDefinition = "TEXT")
     private String biography;
 
-    public User(Long id, String username, String password, Double latitude, Double longitude, String image_profile, String biography) {
+    public User(int id, String username, String password, Double latitude, Double longitude, String image_profile, String biography) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -42,11 +42,11 @@ public class User {
 
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
