@@ -32,7 +32,7 @@ public class UserService {
      * @return El usuario con el id dado
      */
     public User getUserById(int id) {
-        Optional<User> user = userRepository.findById((long) id);
+        Optional<User> user = userRepository.findById((int) id);
         if (user.isPresent()) {
             return user.get();
         } else {
@@ -74,9 +74,9 @@ public class UserService {
      * @param id El id del usuario a eliminar
      */
     public void deleteUser(int id) {
-        Optional<User> result = userRepository.findById((long) id);
+        Optional<User> result = userRepository.findById((int) id);
         if (result.isPresent()) {
-            userRepository.deleteById((long) id);
+            userRepository.deleteById((int) id);
         } else {
             throw new RecordNotFoundException("No se encontró un usuario con el id: " + id);
         }
