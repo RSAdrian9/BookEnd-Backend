@@ -15,7 +15,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByUsername(String username);
 
     // Método para eliminar un usuario por su id de usuario
-    void deleteById(Integer id);
-
+    void deleteById(int id);
 
 }
