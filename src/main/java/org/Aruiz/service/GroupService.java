@@ -1,5 +1,7 @@
 package org.Aruiz.service;
 
+import org.Aruiz.exception.RecordNotFoundException;
+import org.Aruiz.model.Book;
 import org.Aruiz.model.Group;
 import org.Aruiz.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,24 +15,48 @@ public class GroupService {
     @Autowired
     private GroupRepository groupRepository;
 
+    /**
+     * Obtiene todos los grupos.
+     *
+     * @return La lista de todos los grupos.
+     */
     public List<Group> getAllGroups() {
-        return groupRepository.findAll();
+        List<Group> groups = groupRepository.findAll();
+        return groups;
     }
 
-    public Group saveGroup(Group group) {
+    /**
+     * Obtiene un grupo por su ID.
+     *
+     * @param id El ID del grupo a buscar.
+     * @return El grupo encontrado.
+     * @throws RecordNotFoundException Si no se encuentra el grupo con el ID proporcionado.
+     */
+    public Group getGroupById(int id) {
+        return groupRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("No se encontró el grupo con el ID: " + id));
+    }
+
+    /**
+     * Guarda o actualiza un grupo.
+     *
+     * @param group El grupo a guardar o actualizar.
+     * @return El grupo guardado o actualizado.
+     */
+    public Group createOrUpdateGroup(Group group) {
         return groupRepository.save(group);
     }
 
-    public Group getGroupById(Long id) {
-        return groupRepository.findById(id).get();
-    }
-
-    public void deleteGroup(Long id) {
+    /**
+     * Elimina un grupo por su ID.
+     *
+     * @param id El ID del grupo a eliminar.
+     * @throws RecordNotFoundException Si no se encuentra el grupo con el ID proporcionado.
+     */
+    public void deleteGroupById(int id) {
+        if (!groupRepository.existsById(id)) {
+            throw new RecordNotFoundException("No se encontró el grupo con el ID: " + id);
+        }
         groupRepository.deleteById(id);
     }
-
-    public Group updateGroup(Group group) {
-        return groupRepository.save(group);
-    }
-
 }
