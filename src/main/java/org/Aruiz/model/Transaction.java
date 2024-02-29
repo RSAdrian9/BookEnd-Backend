@@ -1,6 +1,7 @@
 package org.Aruiz.model;
 
 import jakarta.persistence.*;
+import org.Aruiz.utils.TransactionStatus;
 
 import java.time.LocalDateTime;
 
@@ -26,14 +27,14 @@ public class Transaction {
     @Column(name = "total_price")
     private double totalPrice; // Precio total calculado
 
+    /*
     @Column(name = "status")
     private String status; // Pendiente, completada, cancelada, etc.
+     */
 
-    @Column(name = "payment_method")
-    private String paymentMethod; // Efectivo, tarjeta de crédito, etc.
-
-    @Column(name = "shipping_address")
-    private String shippingAddress; // Dirección de envío para compras
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private TransactionStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -54,7 +55,11 @@ public class Transaction {
     @Entity
     @DiscriminatorValue("compra")
     class Purchase extends Transaction {
-        // Atributos específicos de las compras
+        @Column(name = "payment_method")
+        private String paymentMethod; // Efectivo, tarjeta de crédito, etc.
+
+        @Column(name = "shipping_address")
+        private String shippingAddress; // Dirección de envío para compras
     }
 
     @Entity
