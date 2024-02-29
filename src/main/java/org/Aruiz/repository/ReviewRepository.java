@@ -1,4 +1,7 @@
 package org.Aruiz.repository;
 
-public interface ReviewRepository {
+import org.Aruiz.model.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
 }

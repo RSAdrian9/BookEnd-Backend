@@ -2,6 +2,7 @@ package org.Aruiz.model;
 
 import jakarta.persistence.*;
 
+// Clase pendiente
 @Entity
 @Table(name="reviews")
 public class Review {

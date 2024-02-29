@@ -60,7 +60,7 @@ public class BookService {
      *
      * @param isbn El ISBN del libro a eliminar
      */
-    public void deleteBook(String isbn) {
+    public void deleteBookByISBN(String isbn) {
         List<Book> books = bookRepository.findByIsbn(isbn);
         if (!books.isEmpty()) {
             bookRepository.deleteAll(books);

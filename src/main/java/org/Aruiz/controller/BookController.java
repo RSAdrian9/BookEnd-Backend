@@ -68,7 +68,7 @@ public class BookController {
      * @param isbn El isbn del usuario a eliminar
      */
     @DeleteMapping("/{isbn}")
-    public void deleteBook(@PathVariable String isbn) {
-        bookService.deleteBook(isbn);
+    public void deleteBookByISBN(@PathVariable String isbn) {
+        bookService.deleteBookByISBN(isbn);
     }
 }
