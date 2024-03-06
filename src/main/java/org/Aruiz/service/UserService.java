@@ -1,6 +1,7 @@
 package org.Aruiz.service;
 
 import org.Aruiz.exception.RecordNotFoundException;
+import org.Aruiz.exception.UsernameAlreadyExistsException;
 import org.Aruiz.model.User;
 import org.Aruiz.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,28 @@ public class UserService {
      * @param user El usuario a crear o actualizar
      * @return El usuario creado o actualizado
      */
+
     public User createOrUpdateUser(User user) {
-        User end;
-        if(user.getId() >0) {// Actualizar
+        // Verificar si el usuario ya existe por su id
+        Optional<User> existingUser = userRepository.findById(user.getId());
+        if (existingUser.isPresent()) {
+            // Si el usuario existe, actualizar sus datos
+            return userRepository.save(user);
+        } else {
+            // Si el usuario no existe, verificar si el nombre de usuario ya está en uso
+            Optional<User> existingUsername = userRepository.findByUsername(user.getUserName());
+            if (existingUsername.isPresent()) {
+                throw new UsernameAlreadyExistsException("El nombre de usuario ya está en uso.");
+            } else {
+                // Si el nombre de usuario no está en uso, crear un nuevo usuario
+                return userRepository.save(user);
+            }
+        }
+    }
+
+    /*
+    public User createOrUpdateUser(User user) {
+        if (user.getId() > 0) { // Actualizar
             Optional<User> result = userRepository.findById(user.getId());
             if (result.isPresent()) {
                 User fromDB = result.get();
@@ -58,15 +78,30 @@ public class UserService {
                 fromDB.setLongitude(user.getLongitude());
                 fromDB.setImageProfile(user.getImageProfile());
                 fromDB.setBiography(user.getBiography());
-                end = userRepository.save(fromDB);
+                return userRepository.save(fromDB);
             } else {
                 throw new RecordNotFoundException("No se encontró un usuario con el id: " + user.getId());
             }
-        } else {// Insertar
-            end= userRepository.save(user);
+        } else { // Insertar
+            // Verificar si el nombre de usuario ya existe
+            Optional<User> existingUser = userRepository.findByUsername(user.getUserName());
+            if (existingUser.isPresent()) {
+                throw new UsernameAlreadyExistsException("El nombre de usuario ya está en uso.");
+            }
+            // Si el nombre de usuario no existe, proceder con la inserción
+            return userRepository.save(user);
         }
-        return end;
     }
+
+     */
+
+    /*
+    public User createOrUpdateUser(User user) {
+        return userRepository.save(user);
+    }
+     */
+
+
 
     /**
      * Elimina un usuario por su id

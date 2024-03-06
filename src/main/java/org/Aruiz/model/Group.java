@@ -26,7 +26,7 @@ public class Group {
     private List<User> users;
 
     // Relación con MensajesGrupales (1:N)
-    @OneToMany(mappedBy = "group_messages")
+    @OneToMany(mappedBy = "group")
     private List<GroupMessage> groupMessages;
 
     public Group() {
