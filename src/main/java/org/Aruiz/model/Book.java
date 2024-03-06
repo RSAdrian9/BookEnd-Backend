@@ -10,7 +10,7 @@ public class Book {
 
     @Id
     @Column(name = "isbn", nullable = false)
-    private String ISBN;
+    private String isbn;
 
     @Column(name = "title", length = 256, nullable = false)
     private String title;
@@ -51,8 +51,8 @@ public class Book {
 
     }
 
-    public Book(String ISBN, String title, String author, String genre, String sinopsis, String language, String editorial, short binding, short number_pages, LocalDate year_edition, LocalDate publication_date, Double price, String image) {
-        this.ISBN = ISBN;
+    public Book(String isbn, String title, String author, String genre, String sinopsis, String language, String editorial, short binding, short number_pages, LocalDate year_edition, LocalDate publication_date, Double price, String image) {
+        this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -68,11 +68,11 @@ public class Book {
     }
 
     public String getISBN() {
-        return ISBN;
+        return isbn;
     }
 
     public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+        this.isbn = ISBN;
     }
 
     public String getTitle() {
@@ -174,7 +174,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "ISBN='" + ISBN + '\'' +
+                "ISBN='" + isbn + '\'' +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", genre='" + genre + '\'' +

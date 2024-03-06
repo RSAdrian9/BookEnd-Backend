@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8100")
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -33,7 +34,7 @@ public class BookController {
      * @return El libro con el isbn dado
      */
     @GetMapping("/{isbn}")
-    public ResponseEntity<List<Book>> getBooksByIsbn(@PathVariable String isbn) {
+    public ResponseEntity<List<Book>> getBooksByIsbn(@PathVariable("isbn") String isbn) {
         List<Book> books = bookService.getBooksByIsbn(isbn);
         return ResponseEntity.ok(books);
     }
@@ -45,7 +46,7 @@ public class BookController {
      * @return El libro con el título dado
      */
     @GetMapping("/title/{title}")
-    public ResponseEntity<List<Book>> getBooksByTitle(@PathVariable String title) {
+    public ResponseEntity<List<Book>> getBooksByTitle(@PathVariable("title") String title) {
         List<Book> books = bookService.getBooksByTitle(title);
         return ResponseEntity.ok(books);
     }
@@ -68,7 +69,7 @@ public class BookController {
      * @param isbn El isbn del usuario a eliminar
      */
     @DeleteMapping("/{isbn}")
-    public void deleteBookByISBN(@PathVariable String isbn) {
+    public void deleteBookByISBN(@PathVariable("isbn") String isbn) {
         bookService.deleteBookByISBN(isbn);
     }
 }

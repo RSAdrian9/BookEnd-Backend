@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:8100")
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -24,7 +25,7 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable int id) {
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable("id") int id) {
         Optional<Transaction> transaction = Optional.ofNullable(transactionService.getTransactionById(id));
         return transaction.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -37,7 +38,7 @@ public class TransactionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTransactionById(@PathVariable int id) {
+    public ResponseEntity<String> deleteTransactionById(@PathVariable("id") int id) {
         try {
             transactionService.deleteTransactionById(id);
             return ResponseEntity.ok("Transacción eliminada con éxito");

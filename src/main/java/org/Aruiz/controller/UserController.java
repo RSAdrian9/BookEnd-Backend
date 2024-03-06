@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8100")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -44,7 +45,7 @@ public class UserController {
      * @param username El nombre de usuario del usuario
      * @return El usuario con el nombre de usuario dado
      */
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username){
         User user = userService.getUserByName(username);
         return ResponseEntity.ok(user);
