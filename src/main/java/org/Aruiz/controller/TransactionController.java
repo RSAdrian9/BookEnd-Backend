@@ -1,6 +1,8 @@
 package org.Aruiz.controller;
 
+import org.Aruiz.model.Book;
 import org.Aruiz.model.Transaction;
+import org.Aruiz.service.BookService;
 import org.Aruiz.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,23 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<Transaction> createOrUpdateTransaction(@RequestBody Transaction transaction) {
+        BookService bookService = new BookService();
+        // Obtener el libro asociado a la transacción
+        Book book = transaction.getBook();
+
+        // Verificar si el libro ya existe en la base de datos
+        if (book.getISBN() == null) {
+            // Si el libro no tiene ID, significa que no está guardado en la base de datos
+            // Guardar el libro en la base de datos primero
+            book = bookService.createOrUpdateBook(book);
+        }
+
+        // Establecer la relación entre la transacción y el libro
+        transaction.setBook(book);
+
+        // Guardar la transacción en la base de datos
         Transaction savedTransaction = transactionService.createOrUpdateTransaction(transaction);
+
         return ResponseEntity.ok(savedTransaction);
     }
 
