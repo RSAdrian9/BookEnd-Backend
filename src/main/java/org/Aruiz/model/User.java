@@ -98,7 +98,6 @@ public class User {
         this.biography = biography;
     }
 
-    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
